@@ -1,0 +1,83 @@
+version: '2.1'
+services:
+  web:
+    image: nfqlt/apache24-fastcgi
+    ports:
+      - '10.24.1.81:80:80'
+    links:
+      - fastcgi
+    volumes:
+      - './src:/home/project/src'
+    environment:
+      APACHE_DOCUMENTROOT: /home/project/src/public
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_APACHE_MODULES: rewrite
+      NFQ_FCGI_IDLE_TIMEOUT: 300
+
+
+  fastcgi:
+    image: nfqlt/php74-fpm
+    links:
+      - mysql
+    volumes:
+      - './src:/home/project/src'
+      - './conf.d/php.ini:/etc/php/7.4/fpm/php.ini:ro'
+    volumes_from:
+      - 'service:node:rw'
+    environment:
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl mbstring xml zip iconv dom bcmath fileinfo xdebug xmlwriter gd xmlreader'
+
+
+  dev:
+    image: nfqlt/php74-dev
+    links:
+      - mysql
+    ports:
+      - '10.24.1.81:22:22'
+    volumes:
+      - './src:/home/project/src'
+      - './conf.d/php.ini:/etc/php/7.4/cli/php.ini:ro'
+    volumes_from:
+      - 'service:node:rw'
+    environment:
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl mbstring xml zip iconv dom bcmath fileinfo xdebug xmlwriter gd xmlreader'
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_REMOTE_TOOL_NODE: >
+        /usr/bin/npm
+        /usr/bin/node
+        /usr/bin/yarn
+
+
+  mysql:
+    image: 'mysql:5.7'
+    container_name: app_mysqli
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - '10.24.1.81:3306:3306'
+    volumes:
+      - './data:/var/lib/mysql'
+
+
+  linker:
+    image: nfqlt/linker18ce
+    volumes:
+      - '/run/docker.sock:/run/docker.sock'
+
+
+  node:
+    image: nfqlt/node12
+    volumes:
+      - './src:/home/project/src'
+      - /tmp
+
+
+volumes: {  }
+networks:
+  default:
+    ipam:
+      config:
+        -
+          subnet: 10.24.1.81/28
+
