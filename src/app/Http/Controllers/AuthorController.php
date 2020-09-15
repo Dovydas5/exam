@@ -42,6 +42,10 @@ class AuthorController extends Controller
             [
                 'author_name' => ['required', 'min:3', 'max:64'],
                 'author_surname' => ['required', 'min:3', 'max:64'],
+            ],
+            [
+                'author_name.min' => 'Vardas turi būti bent trijų simbolių.',
+                'author_surname.min' => 'Pavardė turi būti bent trijų simbolių.'
             ]
         );
         if ($validator->fails()) {
@@ -91,6 +95,10 @@ class AuthorController extends Controller
             [
                 'author_name' => ['required', 'min:3', 'max:64'],
                 'author_surname' => ['required', 'min:3', 'max:64'],
+            ],
+            [
+                'author_name.min' => 'Vardas turi būti bent trijų simbolių.',
+                'author_surname.min' => 'Pavardė turi būti bent trijų simbolių.'
             ]
         );
         if ($validator->fails()) {
@@ -111,8 +119,9 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        if($author->authorBooks->count()){
-            return redirect()->route('author.index')->with('info_message', 'Can\'t delete, he has books');        }
+        if($author->getAuthor->count()){
+            return redirect()->route('author.index')->with('info_message', 'Autoriui yra priskirtos knygos, ištrinti negalite');
+        }
         $author->delete();
         return redirect()->route('author.index')->with('success_message', 'Sekmingai ištrintas.');
     }

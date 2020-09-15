@@ -52,10 +52,15 @@ class BookController extends Controller
             [
                 'book_title' => ['required', 'min:3', 'max:64'],
                 'book_isbn' => ['required'],
-                'book_pages' => ['required'],
+                'book_pages' => ['required', 'numeric'],
                 'book_short_description' => ['required', 'min:3', 'max:64'],
-
-
+            ],
+            [
+                'book_title.required' => 'Turite įvesti knygos pavadinimą',
+                'book_title.min' => 'Pavadinimas turi būti bent dviejų simbolių.',
+                'book_isbn.required' => 'Turite įvesti ISBN.',
+                'book_pages.required' => 'Turite įvesti puslapius',
+                'book_short_description.required' => 'Turite įvesti aprašymą',
             ]
         );
         if ($validator->fails()) {
@@ -69,7 +74,7 @@ class BookController extends Controller
         $book->short_description = $request->book_short_description;
         $book->author_id = $request->author_id;
         $book->save();
-        return redirect()->route('book.index')->with('success_message', 'Sucessfully created');
+        return redirect()->route('book.index')->with('success_message', 'Sekmingai įrašytas');
     }
 
     /**
@@ -117,8 +122,13 @@ class BookController extends Controller
                 'book_isbn' => ['required', 'min:3', 'max:64'],
                 'book_pages' => ['required'],
                 'book_short_description' => ['required', 'min:3', 'max:64'],
-
-
+            ],
+            [
+                'book_title.required' => 'Turite įvesti knygos pavadinimą',
+                'book_title.min' => 'Pavadinimas turi būti bent dviejų simbolių.',
+                'book_isbn.required' => 'Turite įvesti ISBN.',
+                'book_pages.required' => 'Turite įvesti puslapius',
+                'book_short_description.required' => 'Turite įvesti aprašymą',
             ]
         );
         if ($validator->fails()) {
@@ -131,7 +141,7 @@ class BookController extends Controller
         $book->short_description = $request->book_short_description;
         $book->author_id = $request->author_id;
         $book->save();
-        return redirect()->route('book.index')->with('success_message', 'Sėkmingai pakeistas.');
+        return redirect()->route('book.index')->with('success_message', 'Sėkmingai pakeistas');
     }
 
     /**
@@ -143,6 +153,6 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
-        return redirect()->route('book.index')->with('success_message', 'Sekmingai ištrintas.');
+        return redirect()->route('book.index')->with('success_message', 'Sekmingai ištrintas');
     }
 }

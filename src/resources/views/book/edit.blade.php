@@ -21,23 +21,26 @@
                                 <label>Pages</label>
                                 <input type="text" name="book_pages" class="form-control" value="{{$book->pages}}">
                             </div>
-                            <textarea name="book_short_description" id="summernote">{{$book->short_description}}</textarea>
-                            <select class="form-control" name="author_id">
+                            <textarea name="book_short_description"
+                                      id="summernote">{{$book->short_description}}</textarea>
+                            <select class="form-control my-2" name="author_id">
                                 @foreach ($authors as $author)
-                                    <option value="{{$author->id}}" @if($author->id == $book->author_id) selected @endif>
+                                    <option value="{{$author->id}}"
+                                            @if($author->id == $book->author_id) selected @endif>
                                         {{$author->name}} {{$author->surname}}
                                     </option>
                                 @endforeach
                             </select>
                             @csrf
                             <button class="btn btn-primary" type="submit">EDIT</button>
-                        </form>                    </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#summernote').summernote();
         });
     </script>

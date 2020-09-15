@@ -20,55 +20,55 @@
                 </form>
                 @if (count($books))
                     <div class="card">
-                        <div class="card-header">All Trucks</div>
-                            <div class="table-responsive">
-                                <table class="table">
+                        <div class="card-header">All Books</div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th>Title</th>
+                                    <th>ISBN</th>
+                                    <th>Pages</th>
+                                    <th>Author name</th>
+                                    <th>About</th>
+                                    <th>Actions</th>
+                                </tr>
+                                @foreach ($books as $book)
                                     <tr>
-                                        <th>Title</th>
-                                        <th>ISBN</th>
-                                        <th>pages</th>
-                                        <th>Author name</th>
-                                        <th>About</th>
-                                        <th>Actions</th>
+                                        <td>{{$book->title}}</td>
+                                        <td>{{$book->isbn}}</td>
+                                        <td>{{$book->pages}}</td>
+                                        <td>{{$book->getAuthor->name}}</td>
+                                        <td>{!!$book->short_description !!}</td>
+                                        <td style='white-space: nowrap'>
+                                            <form method="POST"
+                                                  action="{{route('book.destroy', [$book])}}">
+                                                <a class="btn btn-info" role="button"
+                                                   href="{{route('book.createPDF', [$book])}}"><i
+                                                        class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                </a>
+                                                <a class="btn btn-primary" role="button"
+                                                   href="{{route('book.show', [$book])}}"><i
+                                                        class="fa fa-eye" aria-hidden="true"></i>
+                                                </a>
+                                                <a class="btn btn-success" role="button"
+                                                   href="{{route('book.edit',[$book])}}"><i
+                                                        class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                                @csrf
+                                                <button class="btn btn-danger" type="submit"><i class="fa fa-trash"
+                                                                                                aria-hidden="true"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
-                                    @foreach ($books as $book)
-                                        <tr>
-                                            <td>{{$book->title}}</td>
-                                            <td>{{$book->isbn}}</td>
-                                            <td>{{$book->pages}}</td>
-                                            <td>{{$book->getAuthor->name}}</td>
-                                            <td>{!!$book->short_description !!}</td>
-                                            <td style='white-space: nowrap'>
-                                                <form method="POST"
-                                                      action="{{route('book.destroy', [$book])}}">
-{{--                                                    <a class="btn btn-info" role="button"--}}
-{{--                                                       href="{{route('book.createPDF', [$book])}}"><i--}}
-{{--                                                            class="fa fa-file-pdf-o" aria-hidden="true"></i>--}}
-{{--                                                    </a>--}}
-                                                    <a class="btn btn-primary" role="button"
-                                                       href="{{route('book.show', [$book])}}"><i
-                                                            class="fa fa-eye" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a class="btn btn-success" role="button"
-                                                       href="{{route('book.edit',[$book])}}"><i
-                                                            class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    @csrf
-                                                    <button class="btn btn-danger" type="submit"><i class="fa fa-trash"
-                                                                                                    aria-hidden="true"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                                @else
-                                    <div class="card">
-                                        <div class="p-4">Nerasta autoriaus knygų</div>
-                                    </div>
-                                @endif
-                            </div>
-                            <br>
+                                @endforeach
+                            </table>
+                            @else
+                                <div class="card">
+                                    <div class="p-4">Nerasta autoriaus knygų</div>
+                                </div>
+                            @endif
+                        </div>
+                        <br>
                     </div>
             </div>
         </div>

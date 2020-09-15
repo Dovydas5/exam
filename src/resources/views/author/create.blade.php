@@ -10,15 +10,18 @@
                         <form method="POST" action="{{route('author.store')}}">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text"  class="form-control" name="author_name" value="{{old('author_name')}}">
+                                <input type="text" class="form-control" name="author_name"
+                                       value="{{old('author_name')}}">
                             </div>
                             <div class="form-group">
                                 <label>Surname</label>
-                                <input type="text" class="form-control"  name="author_surname" value="{{old('author_surname')}}">
+                                <input type="text" class="form-control" name="author_surname"
+                                       value="{{old('author_surname')}}">
                             </div>
                             @csrf
                             <button class="btn btn-primary" type="submit">ADD</button>
-                        </form>                    </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
