@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use App\Book;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -81,6 +82,12 @@ class BookController extends Controller
     {
         return view('book.show', compact('book'));
 
+    }
+    public function createPDF(Book $book){
+
+        $data = Book::all();
+        $pdf = PDF::loadView('book.pdf', compact('book', 'data'));
+        return $pdf->stream('book.pdf');
     }
 
     /**

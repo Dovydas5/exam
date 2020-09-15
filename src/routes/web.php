@@ -21,6 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function(){
 
 Route::group(['prefix' => 'authors'], function(){
     Route::get('', 'AuthorController@index')->name('author.index');
@@ -39,4 +40,7 @@ Route::group(['prefix' => 'books'], function(){
     Route::post('update/{book}', 'BookController@update')->name('book.update');
     Route::post('/delete/{book}', 'BookController@destroy')->name('book.destroy');
     Route::get('show/{book}', 'BookController@show')->name('book.show');
+    Route::get('createPDF/{book}', 'BookController@createPDF')->name('book.createPDF');
+
+});
 });

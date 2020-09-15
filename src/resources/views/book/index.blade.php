@@ -37,7 +37,7 @@
                                             <td>{{$book->isbn}}</td>
                                             <td>{{$book->pages}}</td>
                                             <td>{{$book->getAuthor->name}}</td>
-                                            <td>{!!$book->short_description!!}</td>
+                                            <td>{!!$book->short_description !!}</td>
                                             <td style='white-space: nowrap'>
                                                 <form method="POST"
                                                       action="{{route('book.destroy', [$book])}}">
